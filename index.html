@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Os</title>
+  
+<style>
+  body {
+    font-family: 'Roboto', sans-serif; /* Use Roboto font with rounded style */
+    margin: 0;
+    padding: 0;
+    background-color: #202124; /* Slightly lighter background */
+  }
+  .dingusOS-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .dingusOS-background {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centering the background box */
+    width: 350px; /* slightly larger than the dingusOS box */
+    height: 150px; /* slightly larger than the dingusOS box */
+    background-color: #303136; /* Different shade of grey */
+    border-radius: 25px; /* Slightly larger border radius */
+    z-index: -1; /* Behind the dingusOS box */
+  }
+    .dingusOS-background2 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centering the background box */
+    width: 420px; /* slightly larger than the dingusOS box */
+    height: 200px; /* slightly larger than the dingusOS box */
+    background-color: #292a2e; /* Different shade of grey */
+    border-radius: 25px; /* Slightly larger border radius */
+    z-index: -2; /* Behind the dingusOS box */
+  }
+      .dingusOS-background3 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centering the background box */
+    width: 530px; /* slightly larger than the dingusOS box */
+    height: 260px; /* slightly larger than the dingusOS box */
+    background-color: #242529; /* Different shade of grey */
+    border-radius: 25px; /* Slightly larger border radius */
+    z-index: -3; /* Behind the dingusOS box */
+  }
+  .dingusOS {
+    position: relative;
+    width: 300px;
+    height: 100px;
+    background-color: #34353c; /* Semi-transparent black background */
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .dingusOS-text {
+    font-family: 'Varela Round', sans-serif; /* Use Roboto font with rounded style */
+    font-size: 36px;
+    color: #fff;
+    text-align: center;
+  } 
+  .taskbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 98.5%;
+    height: 50px;
+    background-color: #333; /* Dark taskbar background */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 10px;
+    padding-right: 10px;
+    z-index: 1000;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    font-size: 17px;
+  }
+  .taskbar .task-buttons {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    
+  }
+  .taskbar .task-button {
+    margin-right: 10px;
+    cursor: pointer;
+    color: #fff;
+    transition: transform 0.3s ease-in-out;
+  }
+  .taskbar .task-button:hover {
+    transform: scale(1.1);
+  }
+  .invisible-container {
+    flex: 0 0 33.33%;
+    background-color: #444; /* Darker invisible container background */
+    margin-right: 200px;
+  }
+  .clock {
+    color: #fff;
+    font-size: 17px;
+    margin-left: 0px;
+     background-color: #424242; /* Darker window title bar background */
+    padding: 8px;
+    cursor: normal;
+    user-select: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #ffffff; /* Light window title bar text */
+    border-radius: 9px;
+
+  }
+  .window {
+    position: absolute;
+    width: 360px;
+    height: 240px;
+    background-color: #2c2f33; /* Dark window background */
+    border: none;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    resize: both;
+    overflow: hidden;
+    z-index: 1;
+    transition: transform 0.3s ease-in-out;
+    left: 25%;
+    top: 25%;
+    display: none; /* Hide windows by default */
+    border-radius: 8px;
+  }
+  .window.active {
+    z-index: 1000;
+    display: block; /* Show the active window */
+  }
+  .window-title-bar {
+    background-color: #424242; /* Darker window title bar background */
+    padding: 5px;
+    cursor: move;
+    user-select: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #ffffff; /* Light window title bar text */
+  }
+  .window-content {
+    padding: 10px;
+    overflow: auto;
+    height: calc(100% - 30px);
+  }
+  .minimize-button {
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    color: #ffffff; /* Light minimize button text */
+  }
+  .loading-indicator {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #ccc; /* Light loading indicator text */
+    font-size: 20px;
+  }
+  .window.moving {
+    opacity: 0.5;
+  }
+  .notepad-textarea {
+    width: calc(100% - 5px);
+    height: calc(100% - 20px);
+    border: none;
+    resize: none;
+    outline: none;
+    font-family: 'Roboto', sans-serif; /* Use Roboto font with rounded style */
+    font-size: 14px;
+    border-radius: 7px;
+    background-color: #eee; /* Lighter notepad background */
+    color: #333; /* Dark notepad text */
+  }
+  .post {
+    background-color: #ddd; /* Lighter post background */
+    border: 1px solid #ccc; /* Lighter post border */
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  .post-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333; /* Darker post title text */
+    margin-bottom: 10px;
+  }
+  .post-content {
+    font-size: 14px;
+    color: #555; /* Darker post content text */
+  }
+  .url-input-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .url-input {
+    flex: 1;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #ccc; /* Lighter input border */
+    outline: none;
+    font-size: 14px;
+    background-color: #fff; /* Lighter input background */
+    color: #333; /* Dark input text */
+  }
+  .fetch-button {
+    background-color: #4CAF50; /* Green fetch button background */
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    margin-left: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease-in-out;
+  }
+  .fetch-button:hover {
+    background-color: #45a049; /* Darker fetch button hover background */
+  }
+</style>
+</head>
+<body>
+  <div class="dingusOS-container">
+    <div class="dingusOS-background"></div> <!-- Background box -->
+    <div class="dingusOS-background2"></div>
+    <div class="dingusOS-background3"></div>
+    <div class="dingusOS">
+      <p class="dingusOS-text">◄ dingusOS ►</p>
+    </div>
+  </div>
+
+<div class="taskbar">
+  <div class="task-buttons">
+    &nbsp<div class="task-button"><b>dingusProxy</b></div>&nbsp
+    <div class="task-button"><b>Bypasses & Exploits</b></div>&nbsp
+    <div class="task-button"><b>dingusEditor</b></div>
+  </div>
+  <div class="invisible-container"></div>
+  <div class="clock" id="dateClock"></div>&nbsp
+<div class="clock" id="timeClock"></div>
+
+</div>
+<div class="window" style="left: 25%; top: 25%;">
+  <div class="window-title-bar">
+    <b>&nbspdingusProxy</b>
+    <button class="minimize-button">➖&nbsp</button>
+  </div>
+  <div class="window-content">
+    <div class="url-input-container">
+      <input type="text" class="url-input" id="urlInput" placeholder="Enter URL (https://)">
+      <button class="fetch-button" onclick="fetchContent()">Render</button>
+    </div>
+    <div id="fetchedContent"></div>
+    <div class="loading-indicator">Loading...</div>
+  </div>
+</div>
+<div class="window" style="left: 35%; top: 35%;">
+  <div class="window-title-bar">
+    <b>&nbspBypasses & Exploits</b>
+    <button class="minimize-button">➖&nbsp</button>
+  </div>
+  <div class="window-content">
+    <div class="post">
+      <div class="post-title">Post Title 1</div>
+      <div class="post-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</div>
+    </div>
+    <div class="post">
+      <div class="post-title">Post Title 2</div>
+      <div class="post-content">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae.</div>
+    </div>
+    <div class="post">
+      <div class="post-title">Post Title 3</div>
+      <div class="post-content">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</div>
+    </div>
+    <div class="post">
+      <div class="post-title">Post Title 4</div>
+      <div class="post-content">Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</div>
+    </div>
+    <div class="post">
+      <div class="post-title">Post Title 5</div>
+      <div class="post-content">Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</div>
+    </div>
+  </div>
+</div>
+<div class="window" style="left: 50%; top: 50%;">
+  <div class="window-title-bar">
+    <b>&nbspdingusEditor</b>
+    <button class="minimize-button">➖&nbsp</button>
+  </div>
+  <div class="window-content">
+    <textarea class="notepad-textarea" id="notepadContent" placeholder="Write your notes here..."></textarea>
+  </div>
+</div>
+
+<script>
+var corsProxies = [
+  'https://api.codetabs.com/v1/proxy?quest=',
+  'https://cors.bridged.cc/',
+  'https://api.allorigins.win/raw?url=',
+  'https://api.codetabs.com/v1/proxy/?quest=',
+  'https://thingproxy.freeboard.io/fetch/',
+  'https://api.codetabs.com/v1/proxy/?quest=',
+  'https://jsonp.afeld.me/?url=',
+  'https://api.codetabs.com/v1/proxy/?quest=',
+  'https://crossorigin.me/',
+  'https://jsonp.afeld.me/?url=',
+  // Add more CORS proxies here...
+];
+
+// Load notepad content from local storage
+document.getElementById('notepadContent').value = localStorage.getItem('notepadContent') || '';
+
+// Save notepad content to local storage on change
+document.getElementById('notepadContent').addEventListener('input', function() {
+  localStorage.setItem('notepadContent', this.value);
+});
+
+function fetchContent() {
+  var url = document.getElementById('urlInput').value.trim();
+  var fetchedContentDiv = document.getElementById('fetchedContent');
+  var loadingIndicator = document.querySelector('.window.active .loading-indicator');
+
+  if (!url.startsWith('http://') && !url.startsWith('https://')) {
+    url = 'http://' + url; // Adding http:// if not provided
+  }
+
+  // Show loading indicator
+  loadingIndicator.style.display = 'block';
+  
+  // Try each CORS proxy until successful
+  var i = 0;
+  var tryProxy = function() {
+    fetch(corsProxies[i] + url)
+      .then(response => response.text())
+      .then(data => {
+        // Hide loading indicator
+        loadingIndicator.style.display = 'none';
+        // Display fetched content within the confines of the window
+        fetchedContentDiv.innerHTML = data;
+      })
+      .catch(error => {
+        console.error('Error fetching content with proxy:', corsProxies[i], error);
+        i++;
+        if (i < corsProxies.length) {
+          tryProxy();
+        } else {
+          // Hide loading indicator
+          loadingIndicator.style.display = 'none';
+          fetchedContentDiv.innerHTML = '<p>Error fetching content. Please check the URL.</p>';
+        }
+      });
+  };
+
+  tryProxy();
+}
+
+var windows = document.querySelectorAll('.window');
+var taskbarHeight = document.querySelector('.taskbar').offsetHeight;
+
+windows.forEach(function(window) {
+  var isDragging = false;
+  var dragStartX, dragStartY;
+  var screenWidth = window.innerWidth;
+  var screenHeight = window.innerHeight;
+
+  window.addEventListener('mousedown', function() {
+    // When a window is clicked, bring it to the front
+    activeWindow = window;
+    windows.forEach(function(w) {
+      w.classList.remove('active');
+    });
+    window.classList.add('active');
+  });
+
+  window.querySelector('.window-title-bar').addEventListener('mousedown', function(e) {
+    isDragging = true;
+    dragStartX = e.clientX - window.offsetLeft;
+    dragStartY = e.clientY - window.offsetTop;
+    window.classList.add('moving'); // Add moving class
+  });
+
+  window.addEventListener('mouseup', function() {
+    isDragging = false;
+    window.classList.remove('moving'); // Remove moving class
+  });
+
+  window.addEventListener('mousemove', function(e) {
+    if (isDragging) {
+      var newLeft = e.clientX - dragStartX;
+      var newTop = e.clientY - dragStartY;
+
+      // Restrict the dragging within screen bounds
+      if (newLeft < 0) {
+        newLeft = 0;
+      } else if (newLeft > screenWidth - window.offsetWidth) {
+        newLeft = screenWidth - window.offsetWidth;
+      }
+
+      if (newTop < taskbarHeight) {
+        newTop = taskbarHeight;
+      } else if (newTop > screenHeight - window.offsetHeight) {
+        newTop = screenHeight - window.offsetHeight;
+      }
+
+      window.style.left = newLeft + 'px';
+      window.style.top = newTop + 'px';
+    }
+  });
+
+  window.querySelector('.minimize-button').addEventListener('click', function() {
+    window.style.display = 'none';
+  });
+});
+
+var taskButtons = document.querySelectorAll('.task-button');
+
+taskButtons.forEach(function(button, index) {
+  button.addEventListener('click', function() {
+    windows[index].style.display = 'block';
+  });
+});
+
+// Update clock every second
+function updateClock() {
+  var now = new Date();
+  var hours = now.getHours();
+  var minutes = now.getMinutes();
+  var seconds = now.getSeconds();
+  var ampm = hours >= 12 ? 'PM' : 'AM';
+  hours = hours % 12;
+  hours = hours ? hours : 12;
+  minutes = minutes < 10 ? '0' + minutes : minutes;
+  seconds = seconds < 10 ? '0' + seconds : seconds;
+  var timeString = hours + ':' + minutes + ':' + seconds + ' ' + ampm;
+  document.getElementById('clock').textContent = timeString;
+}
+updateClock();
+setInterval(updateClock, 1000);
+</script>
+<script>
+// Update date clock
+function updateDateClock() {
+  var now = new Date();
+  var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  var dateString = now.toLocaleDateString('en-US', options);
+  document.getElementById('dateClock').textContent = dateString;
+}
+updateDateClock();
+setInterval(updateDateClock, 1000); // Update every second
+
+// Update time clock
+function updateTimeClock() {
+  var now = new Date();
+  var hours = now.getHours();
+  var minutes = now.getMinutes();
+  var seconds = now.getSeconds();
+  var ampm = hours >= 12 ? 'PM' : 'AM';
+  hours = hours % 12;
+  hours = hours ? hours : 12;
+  minutes = minutes < 10 ? '0' + minutes : minutes;
+  seconds = seconds < 10 ? '0' + seconds : seconds;
+  var timeString = hours + ':' + minutes + ':' + seconds + ' ' + ampm;
+  document.getElementById('timeClock').textContent = timeString;
+}
+updateTimeClock();
+setInterval(updateTimeClock, 1000); // Update every second
+</script>
+
+</body>
+</html>
