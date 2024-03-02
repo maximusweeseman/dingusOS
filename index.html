@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Os</title>
-  
+<title>dingusOS</title>
+
 <style>
   body {
-    font-family: 'Roboto', sans-serif; /* Use Roboto font with rounded style */
+    font-family: 'Roboto', sans-serif; 
     margin: 0;
     padding: 0;
-    background-color: #202124; /* Slightly lighter background */
+    background-color: #202124; 
   }
   .dingusOS-container {
     position: fixed;
@@ -21,47 +21,47 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%); /* Centering the background box */
-    width: 350px; /* slightly larger than the dingusOS box */
-    height: 150px; /* slightly larger than the dingusOS box */
-    background-color: #303136; /* Different shade of grey */
-    border-radius: 25px; /* Slightly larger border radius */
-    z-index: -1; /* Behind the dingusOS box */
+    transform: translate(-50%, -50%); 
+    width: 350px; 
+    height: 150px; 
+    background-color: #303136; 
+    border-radius: 25px; 
+    z-index: -1; 
   }
     .dingusOS-background2 {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%); /* Centering the background box */
-    width: 420px; /* slightly larger than the dingusOS box */
-    height: 200px; /* slightly larger than the dingusOS box */
-    background-color: #292a2e; /* Different shade of grey */
-    border-radius: 25px; /* Slightly larger border radius */
-    z-index: -2; /* Behind the dingusOS box */
+    transform: translate(-50%, -50%); 
+    width: 420px; 
+    height: 200px; 
+    background-color: #292a2e;
+    border-radius: 25px;
+    z-index: -2; 
   }
       .dingusOS-background3 {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%); /* Centering the background box */
-    width: 530px; /* slightly larger than the dingusOS box */
-    height: 260px; /* slightly larger than the dingusOS box */
-    background-color: #242529; /* Different shade of grey */
-    border-radius: 25px; /* Slightly larger border radius */
-    z-index: -3; /* Behind the dingusOS box */
+    transform: translate(-50%, -50%); 
+    width: 530px; 
+    height: 260px; 
+    background-color: #242529; l
+    border-radius: 25px; 
+    z-index: -3; 
   }
   .dingusOS {
     position: relative;
     width: 300px;
     height: 100px;
-    background-color: #34353c; /* Semi-transparent black background */
+    background-color: #34353c; 
     border-radius: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
   }
   .dingusOS-text {
-    font-family: 'Varela Round', sans-serif; /* Use Roboto font with rounded style */
+    font-family: 'Varela Round', sans-serif; 
     font-size: 36px;
     color: #fff;
     text-align: center;
@@ -72,7 +72,7 @@
     left: 0;
     width: 98.5%;
     height: 50px;
-    background-color: #333; /* Dark taskbar background */
+    background-color: #333; 
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -87,7 +87,7 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    
+
   }
   .taskbar .task-button {
     margin-right: 10px;
@@ -100,21 +100,21 @@
   }
   .invisible-container {
     flex: 0 0 33.33%;
-    background-color: #444; /* Darker invisible container background */
+    background-color: #444; 
     margin-right: 200px;
   }
   .clock {
     color: #fff;
     font-size: 17px;
     margin-left: 0px;
-     background-color: #424242; /* Darker window title bar background */
+     background-color: #424242; 
     padding: 8px;
     cursor: normal;
     user-select: none;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: #ffffff; /* Light window title bar text */
+    color: #ffffff; 
     border-radius: 9px;
 
   }
@@ -122,7 +122,7 @@
     position: absolute;
     width: 360px;
     height: 240px;
-    background-color: #2c2f33; /* Dark window background */
+    background-color: #2c2f33; 
     border: none;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
     resize: both;
@@ -131,22 +131,22 @@
     transition: transform 0.3s ease-in-out;
     left: 25%;
     top: 25%;
-    display: none; /* Hide windows by default */
+    display: none; 
     border-radius: 8px;
   }
   .window.active {
     z-index: 1000;
-    display: block; /* Show the active window */
+    display: block; 
   }
   .window-title-bar {
-    background-color: #424242; /* Darker window title bar background */
+    background-color: #424242; 
     padding: 5px;
     cursor: move;
     user-select: none;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: #ffffff; /* Light window title bar text */
+    color: #ffffff; 
   }
   .window-content {
     padding: 10px;
@@ -158,7 +158,7 @@
     border: none;
     padding: 0;
     cursor: pointer;
-    color: #ffffff; /* Light minimize button text */
+    color: #ffffff; 
   }
   .loading-indicator {
     display: none;
@@ -166,7 +166,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: #ccc; /* Light loading indicator text */
+    color: #ccc; 
     font-size: 20px;
   }
   .window.moving {
@@ -178,15 +178,15 @@
     border: none;
     resize: none;
     outline: none;
-    font-family: 'Roboto', sans-serif; /* Use Roboto font with rounded style */
+    font-family: 'Roboto', sans-serif; 
     font-size: 14px;
     border-radius: 7px;
-    background-color: #eee; /* Lighter notepad background */
-    color: #333; /* Dark notepad text */
+    background-color: #eee; 
+    color: #333; 
   }
   .post {
-    background-color: #ddd; /* Lighter post background */
-    border: 1px solid #ccc; /* Lighter post border */
+    background-color: #ddd; 
+    border: 1px solid #ccc; 
     border-radius: 8px;
     padding: 15px;
     margin-bottom: 15px;
@@ -195,12 +195,12 @@
   .post-title {
     font-size: 18px;
     font-weight: bold;
-    color: #333; /* Darker post title text */
+    color: #333; 
     margin-bottom: 10px;
   }
   .post-content {
     font-size: 14px;
-    color: #555; /* Darker post content text */
+    color: #555; 
   }
   .url-input-container {
     display: flex;
@@ -211,14 +211,14 @@
     flex: 1;
     padding: 10px;
     border-radius: 10px;
-    border: 1px solid #ccc; /* Lighter input border */
+    border: 1px solid #ccc; 
     outline: none;
     font-size: 14px;
-    background-color: #fff; /* Lighter input background */
-    color: #333; /* Dark input text */
+    background-color: #fff; 
+    color: #333; 
   }
   .fetch-button {
-    background-color: #4CAF50; /* Green fetch button background */
+    background-color: #4CAF50; 
     color: #fff;
     border: none;
     border-radius: 10px;
@@ -229,13 +229,13 @@
     transition: background-color 0.3s ease-in-out;
   }
   .fetch-button:hover {
-    background-color: #45a049; /* Darker fetch button hover background */
+    background-color: #45a049; 
   }
 </style>
 </head>
 <body>
   <div class="dingusOS-container">
-    <div class="dingusOS-background"></div> <!-- Background box -->
+    <div class="dingusOS-background"></div> 
     <div class="dingusOS-background2"></div>
     <div class="dingusOS-background3"></div>
     <div class="dingusOS">
@@ -340,7 +340,7 @@ function fetchContent() {
 
   // Show loading indicator
   loadingIndicator.style.display = 'block';
-  
+
   // Try each CORS proxy until successful
   var i = 0;
   var tryProxy = function() {
@@ -403,7 +403,6 @@ windows.forEach(function(window) {
       var newLeft = e.clientX - dragStartX;
       var newTop = e.clientY - dragStartY;
 
-      // Restrict the dragging within screen bounds
       if (newLeft < 0) {
         newLeft = 0;
       } else if (newLeft > screenWidth - window.offsetWidth) {
@@ -434,7 +433,7 @@ taskButtons.forEach(function(button, index) {
   });
 });
 
-// Update clock every second
+
 function updateClock() {
   var now = new Date();
   var hours = now.getHours();
@@ -462,7 +461,6 @@ function updateDateClock() {
 updateDateClock();
 setInterval(updateDateClock, 1000); // Update every second
 
-// Update time clock
 function updateTimeClock() {
   var now = new Date();
   var hours = now.getHours();
@@ -477,7 +475,7 @@ function updateTimeClock() {
   document.getElementById('timeClock').textContent = timeString;
 }
 updateTimeClock();
-setInterval(updateTimeClock, 1000); // Update every second
+setInterval(updateTimeClock, 1000); 
 </script>
 
 </body>
